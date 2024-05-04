@@ -75,22 +75,22 @@ WSGI_APPLICATION = 'grantpl.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'grantplatform',
-#         'USER': 'Asse',
-#         'PASSWORD': '12345',
-#         'HOST': 'localhost',   # або IP-адреса сервера PostgreSQL
-#         'PORT': '5432',        # порт по замовчуванню для PostgreSQL
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'Grant',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'localhost',   # або IP-адреса сервера PostgreSQL
+        'PORT': '5432',        # порт по замовчуванню для PostgreSQL
+    }
+}
 
 
 
