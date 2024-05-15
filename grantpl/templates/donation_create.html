@@ -1,0 +1,295 @@
+{% load static %}
+{% block css_add %}
+    <link rel="stylesheet" href="{% static 'donation_create.css' %}">
+{% endblock %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Fundraiser</title>
+</head>
+<body>
+<header>
+    <div class="Allmenu">
+        <div class="logo"></div>
+        <div class="Topmenu">
+            <ul>
+                <li><a href="{% url 'personal_dashboard' %}">Збори</a></li>
+                <li><a href="{% url 'donation_create' %}">Створити Збір</a></li>
+                <li><a href="{% url 'personal_dashboard' %}">Аккаунт</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+            <h1 class="text-center">Create Fundraiser</h1>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" name="title" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description" class="form-control" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="report_expected_due_date">Report Expected Due Date:</label>
+                    <input type="date" id="report_expected_due_date" name="report_expected_due_date" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="requisites_monobank_jar">Monobank Jar:</label>
+                    <input type="text" id="requisites_monobank_jar" name="requisites_monobank_jar" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="requisites_iban">IBAN:</label>
+                    <input type="text" id="requisites_iban" name="requisites_iban" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="requisites_paypal">PayPal:</label>
+                    <input type="text" id="requisites_paypal" name="requisites_paypal" class="form-control">
+
+                <button type="submit" class="btn btn-primary">Create Fundraiser</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="fundraiser-block">
+    <h2>Название сбора</h2>
+    <p>Описание сбора...</p>
+    <!-- Здесь могут быть другие данные о сборе -->
+    <div class="status">На рассмотрении</div>
+    <div class="actions">
+        <button class="btn btn-info">Информация про сбор</button>
+        <button class="btn btn-danger">Закрыть сбор</button>
+        <button class="btn btn-primary" disabled>Загрузить отчет</button>
+    </div>
+</div>
+
+
+
+
+<div class="modal fade" id="fundraiser-info-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Информация про сбор</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                Название сбора: <br>
+                Описание сбора: <br>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="confirm-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Подтверждение закрытия сбора</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Вы уверены, что хотите закрыть сбор?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Нет</button>
+                <button type="button" class="btn btn-primary" id="confirm-close">Да</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ <script src='https://www.google.com/recaptcha/api.js'></script>
+ <script src="https://bootstraptema.ru/snippets/form/2017/recaptcha/validator.js"></script>
+ <script src="https://bootstraptema.ru/snippets/form/2017/recaptcha/contact.js"></script>
+<script>
+    $(document).ready(function(){
+        // При нажатии на кнопку "Информация про сбор"
+        $('.btn-info').click(function(){
+            // Отображаем модальное окно с информацией
+            $('#fundraiser-info-modal').modal('show');
+        });
+
+        // При нажатии на кнопку "Закрыть сбор"
+        $('.btn-danger').click(function(){
+            // Отображаем модальное окно подтверждения
+            $('#close-fundraiser-modal').modal('show');
+        });
+
+        // При нажатии на кнопку "Загрузить отчет"
+        $('.btn-primary').click(function(){
+            // Пока что просто выведем сообщение в консоль
+            console.log('Отчет будет загружен');
+        });
+    });
+
+    // Показать окно с информацией о сборе
+$('#show-info').click(function(){
+    $('#fundraiser-info').show();
+});
+
+// Показать модальное окно для подтверждения закрытия сбора
+$('#show-confirm-modal').click(function(){
+    $('#confirm-modal').modal('show');
+});
+
+// Обработчик нажатия на кнопку "Да" в модальном окне
+$('#confirm-close').click(function(){
+    // Добавьте здесь код для закрытия сбора
+    // Например, отправьте запрос на сервер для изменения статуса сбора
+});
+
+</script>
+ <script>$(document).ready(function(){
+    $('form').submit(function(event){
+        event.preventDefault(); // Предотвращаем отправку формы, чтобы использовать AJAX
+
+        // Отправляем данные формы на сервер
+        $.ajax({
+            type: 'POST',
+            url: '/create_fundraiser/', // Замените на URL, на который нужно отправлять запрос
+            data: $(this).serialize(),
+            success: function(response){
+                // После успешного ответа сервера, добавляем блок с информацией о сборе
+                var fundraiserBlock = '<div class="fundraiser-block">';
+                fundraiserBlock += '<h2>' + response.title + '</h2>';
+                fundraiserBlock += '<p>' + response.description + '</p>';
+                // Добавьте остальные данные о сборе
+                fundraiserBlock += '</div>';
+
+                $('.container').append(fundraiserBlock);
+            },
+            error: function(xhr, errmsg, err){
+                console.log(xhr.status + ": " + xhr.responseText); // Выводим ошибку в консоль
+                // Здесь можно добавить обработку ошибки
+            }
+        });
+    });
+});
+</script>
+
+
+<style>
+@import url(//fonts.googleapis.com/css?family=Montserrat:300,400,500);
+.bform {
+ font-family: "Montserrat", sans-serif;
+ color: #8d97ad;
+ font-weight: 300;
+ overflow: hidden;
+ position: relative;
+}
+
+.bform h1,
+.bform h2,
+.bform h3,
+.bform h4,
+.bform h5,
+.bform h6 {
+ color: #3e4555;
+}
+
+.bform .subtitle {
+ color: #8d97ad;
+ line-height: 24px;
+}
+
+.bform a {
+ text-decoration: none;
+}
+
+.bform .btn-danger-gradiant {
+ background: #ff4d7e;
+ background: -webkit-linear-gradient(legacy-direction(to right), #ff4d7e 0%, #ff6a5b 100%);
+ background: -webkit-gradient(linear, left top, right top, from(#ff4d7e), to(#ff6a5b));
+ background: -webkit-linear-gradient(left, #ff4d7e 0%, #ff6a5b 100%);
+ background: -o-linear-gradient(left, #ff4d7e 0%, #ff6a5b 100%);
+ background: linear-gradient(to right, #ff4d7e 0%, #ff6a5b 100%);
+}
+
+.bform .btn-danger-gradiant:hover {
+ background: #ff6a5b;
+ background: -webkit-linear-gradient(legacy-direction(to right), #ff6a5b 0%, #ff4d7e 100%);
+ background: -webkit-gradient(linear, left top, right top, from(#ff6a5b), to(#ff4d7e));
+ background: -webkit-linear-gradient(left, #ff6a5b 0%, #ff4d7e 100%);
+ background: -o-linear-gradient(left, #ff6a5b 0%, #ff4d7e 100%);
+ background: linear-gradient(to right, #ff6a5b 0%, #ff4d7e 100%);
+}
+
+.bform .btn-md {
+ padding: 15px 45px;
+ font-size: 16px;
+}
+
+.bform .bg-facebook {
+ background-color: #3b5a9a;
+}
+
+.bform .bg-twitter {
+ background-color: #56adf2;
+}
+
+.bform .text-danger {
+ color: #ff4d7e !important;
+}
+
+.bform .right-image {
+ background-position: center bottom;
+ background-size: cover;
+ background-repeat: no-repeat;
+ position: absolute;
+ right: 0;
+ bottom: 0;
+ top: 0;
+}
+
+@media (max-width: 1023px) {
+ .bform .contact-form {
+ padding-left: 0;
+ padding-right: 0;
+ }
+}
+
+@media (max-width: 767px) {
+ .bform .contact-form {
+ padding-left: 15px;
+ padding-right: 15px;
+ }
+}
+
+@media (max-width: 1023px) {
+ .bform .right-image {
+ position: relative;
+ bottom: -95px;
+ }
+}
+</style>
+
+
+ <style></style>
+</body>
+</html>
+{% endblock %}

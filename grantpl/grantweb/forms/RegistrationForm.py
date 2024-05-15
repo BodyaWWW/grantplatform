@@ -1,16 +1,21 @@
 from django import forms
 
-from grantweb.models.CustomUser import CustomUser
+from ..models.models import User
 
 
 class RegistrationForm(forms.ModelForm):
     class Meta:
-        model = CustomUser
-        fields = ['email', 'account_type', 'password', 'company_name', 'company_website']
+        model = User
+        fields = ['email', 'password']
         widgets = {
             'password': forms.PasswordInput(),
-            'account_type': forms.RadioSelect(choices=CustomUser.ACCOUNT_TYPE_CHOICES),
+
         }
+
+
+class LoginForm(forms.Form):
+    email = forms.EmailField()
+    password = forms.CharField(widget=forms.PasswordInput())
 
 class ForgotPasswordForm(forms.Form):
     email = forms.EmailField(label='Email')

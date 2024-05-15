@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'grantpl.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Grant',
+        'NAME': 'Grant_test',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
         'HOST': 'localhost',   # або IP-адреса сервера PostgreSQL
@@ -138,3 +138,5 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+APPEND_SLASH = False
