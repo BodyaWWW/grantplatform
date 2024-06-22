@@ -1,0 +1,137 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Grants List</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
+    <style>
+        .cover {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .cover h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        .flex-form {
+            display: flex;
+            justify-content: center;
+        }
+        .flex-form input[type="search"] {
+            width: 300px;
+            margin-right: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+        }
+        .flex-form input[type="submit"] {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        .flex-form input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .modal-body .message {
+            text-align: center;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <div class="container">
+        <div class="cover">
+            <h1>Знайди Свій Грант</h1>
+            <form class="flex-form">
+                <label for="from">
+                    <i class="ion-location"></i>
+                </label>
+                <input type="search" placeholder="Введіть ключові слова" id="search">
+                <input type="submit" value="Пошук">
+            </form>
+            <div id="madeby">
+                <!-- Ваш контент здесь -->
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        {% for grant in grants %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ grant.name }}</h5>
+                    <p class="card-text">{{ grant.description }}</p>
+                    <a href="{{ grant.source_url }}" class="btn btn-info" target="_blank">Подробніше</a>
+                    <button class="btn btn-success apply-btn" data-bs-toggle="modal" data-bs-target="#applyModal" data-grant-id="{{ grant.id }}">Подати заявку</button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="applyModal" tabindex="-1" aria-labelledby="applyModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="applyForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="applyModalLabel">Подати заявку</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-content">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="agreement" required>
+                            <label class="form-check-label" for="agreement">Згоден на обробку даних</label>
+                        </div>
+                        <input type="hidden" id="grantId" value="">
+                    </div>
+                    <div class="message d-none">
+                        Менеджер вже обробляє Вашу заявку!
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                    <button type="submit" class="btn btn-primary">Подати заявку</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.apply-btn').on('click', function() {
+            var grantId = $(this).data('grant-id');
+            $('#grantId').val(grantId);
+            $('.form-content').removeClass('d-none');
+            $('.message').addClass('d-none');
+        });
+
+        $('#applyForm').on('submit', function(e) {
+            e.preventDefault();
+            // Here you can implement AJAX call to submit the form data
+            // For demonstration, we'll just show an alert
+            $('.form-content').addClass('d-none');
+            $('.message').removeClass('d-none');
+            setTimeout(function() {
+                $('#applyModal').modal('hide');
+            }, 3000);
+        });
+    });
+</script>
+</body>
+</html>

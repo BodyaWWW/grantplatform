@@ -2,7 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 class User(models.Model):
-    email = models.CharField(max_length=255)
+    id = models.AutoField(primary_key=True)
+    email = models.CharField(max_length=255, unique=True)
     password = models.CharField(max_length=255)
     salt = models.CharField(max_length=255)
     is_active = models.BooleanField(default=False)
@@ -12,12 +13,8 @@ class User(models.Model):
     role = models.ForeignKey('Role', on_delete=models.CASCADE)
     user_profile = models.ForeignKey('UserProfile', on_delete=models.CASCADE)
 
-    def __init__(self, email, password,account_type, *args, **kwargs):
-        super(User, self).__init__(*args, **kwargs)
-        self.email = email
-        self.password = password
-
-
+    def __str__(self):
+        return f"User(email={self.email}, password={self.password})"
 class UserProfile(models.Model):
     profile_photo = models.BinaryField(null=True)
     description = models.TextField()
@@ -92,10 +89,10 @@ class DonationTarget(models.Model):
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     report_expected_due_date = models.DateTimeField(null=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    donation_requisites = models.ForeignKey('DonationRequisites', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    donation_requisites = models.ForeignKey('DonationRequisites', on_delete=models.CASCADE, null=True, default=None)
     donation_target_status = models.ForeignKey('DonationTargetStatus', on_delete=models.CASCADE)
-    donation_target_report = models.ForeignKey('DonationTargetReport', on_delete=models.CASCADE)
+    donation_target_report = models.ForeignKey('DonationTargetReport', on_delete=models.CASCADE, null=True,default=None)
 
 class DonationTargetStatus(models.Model):
     status = models.CharField(max_length=255)

@@ -9,61 +9,53 @@
         crossorigin="anonymous">
 </head>
 <body>
-
 <div class="container" id="container">
     <div class="form-container sign-up-container">
         <form action="/register/" method="post" id="registration_form">
             {% csrf_token %}
-            <h1>Create Account</h1>
-            <div class="social-container">
-
-            </div>
-            <span>or use your email for registration</span>
-            <label for="account_type">Account Type:</label>
+            <h1>Створити Аккаунт</h1>
+            <div class="social-container"></div>
+            <span></span>
+            <label for="account_type">Тип аккаунта:</label>
             <select id="account_type" name="account_type">
-                <option value="individual">Individual</option>
-                <option value="organization">Organization</option>
+                <option value="individual">Індивідуальний</option>
+                <option value="organization">Організація</option>
             </select>
             <input type="email" name="email" id="email" placeholder="Email" />
             <div id="error-message" style="color: red; display: none;"></div>
-            <input type="password" name="password" placeholder="Password" />
+            <input type="password" name="password" placeholder="Пароль" />
             <div id="organization_fields" style="display: none;">
-                <input type="text" name="company_name" placeholder="Company Name" />
-                <input type="text" name="company_website" placeholder="Company Website" />
+                <input type="text" name="company_name" placeholder="Назва Компанії" />
+                <input type="text" name="company_website" placeholder="Веб-сторінка Компанії" />
             </div>
-            <button type="submit" id="submit_button">Sign Up</button>
+            <button type="submit" id="submit_button">Реєстрація</button>
         </form>
         {% if error_message %}
         <div style="color: red;">{{ error_message }}</div>
         {% endif %}
     </div>
     <div class="form-container sign-in-container">
-        <form action="post">
-            <h1>Sign in</h1>
-            <div class="social-container">
-
-            </div>
-            <span>or use your account</span>
-            <input type="email" placeholder="Email" />
-            <input type="password" placeholder="Password" />
-            <a id="forgot_password_button">Forgot your password?</a>
-
-            <!-- Форма для відновлення пароля -->
-
-            <button>Sign In</button>
+        <form action="/login/" method="post">
+            {% csrf_token %}
+            <h1>Вхід</h1>
+            <div class="social-container"></div>
+            <input type="email" name="email" placeholder="Email" required />
+            <input type="password" name="password" placeholder="Пароль" required />
+            <a id="forgot_password_button">Забули Пароль?</a>
+            <button type="submit">Вхід</button>
         </form>
     </div>
     <div class="overlay-container">
         <div class="overlay">
             <div class="overlay-panel overlay-left">
-                <h1>Welcome Back!</h1>
-                <p>To keep connected with us please login with your personal info</p>
-                <button class="ghost" id="signIn">Sign In</button>
+                <h1>З поверненням!</h1>
+                <p>Давно не бачились, увійдіть, використовуючи свої особисті дані</p>
+                <button class="ghost" id="signIn">Вхід</button>
             </div>
             <div class="overlay-panel overlay-right">
-                <h1>Hello, Friend!</h1>
-                <p>Enter your personal details and start journey with us</p>
-                <button class="ghost" id="signUp" >Sign Up</button>
+                <h1>Привіт, Друг!</h1>
+                <p>Введіть свої особисті дані та починайте подорож з нами</p>
+                <button class="ghost" id="signUp" >Реєстрація</button>
             </div>
         </div>
     </div>
@@ -93,21 +85,18 @@
     });
 </script>
 
-
-
-    <script>
-        document.getElementById('account_type').addEventListener('change', function() {
-            var organizationFields = document.getElementById('organization_fields');
-            if (this.value === 'organization') {
-                organizationFields.style.display = 'block';
-            } else {
-                organizationFields.style.display = 'none';
-            }
-        });
-    </script>
+<script>
+    document.getElementById('account_type').addEventListener('change', function() {
+        var organizationFields = document.getElementById('organization_fields');
+        if (this.value === 'organization') {
+            organizationFields.style.display = 'block';
+        } else {
+            organizationFields.style.display = 'none';
+        }
+    });
+</script>
 </body>
 </html>
-
     <style>
       @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
 

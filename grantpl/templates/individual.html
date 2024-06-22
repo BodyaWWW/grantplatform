@@ -21,7 +21,7 @@
                 <ul>
                     <li><a href="{% url 'personal_dashboard' %}">Збори</a></li>
                     <li><a href="{% url 'donation_create' %}">Створити Збір</a></li>
-                    <li><a href="{% url 'personal_dashboard' %}">Аккаунт</a></li>
+                    <li><a href="{% url 'profile' %}">Аккаунт</a></li>
                 </ul>
 
             </div>
@@ -30,13 +30,13 @@
 
     <div class="container">
     <div class="cover">
-        <h1>Discover what's out there.</h1>
+        <h1>Знайди Свій Збір!</h1>
         <form class="flex-form">
             <label for="from">
                 <i class="ion-location"></i>
             </label>
-            <input type="search" placeholder="Where do you want to go?">
-            <input type="submit" value="Search">
+            <input type="search" placeholder="Введіть ключові слова">
+            <input type="submit" value="Пошук">
         </form>
         <div id="madeby">
             <!-- Ваш контент здесь -->
@@ -137,12 +137,8 @@
 
     <hr>
 <div class="fundraiser-block">
-    <h2>Збір на БПЛА "Сич" для підрозділу ГУР</h2>
-    <p>KOLO запускає новий збір для ГУР!
-
-Один з підрозділів ГУР, екіпаж розвідувальних безпілотних систем, працює в найгарячіших точках, з надскладними  завданнями, і для виконання непростих задач розвідки цим мужнім воїнам потрібен борт-розвідник.
-
-Комплексами С-300 ворог нищить наші міста і села, а особливо ті, що розташовані поруч з лінією розмежування. Тож одним з головних завдань підрозділу є пошук та негайне знищення комплексів С-300, які ворог так ретельно оберігає. Ситуацію докорінно змінить якісно інший БПЛА-розвідник – такий, що здатен довгий час триматись у повітрі та долати великі відстані.</p>
+    <h2>Закупівля автомвтів АК-47</h2>
+    <p>Закупівля автоматів АК-47 для 3 штурмової бригади. Потребується 50 автоматів для реалізації штурмової операці</p>
     <div class="status">Відкритий</div>
 
 
@@ -172,7 +168,7 @@
 <div class="form-group row">
 <label class="col-sm-4 col-form-label">Хто Збирає </label>
 <div class="col-sm-8">
-<input type="text" name="sum" value="KOLO" data-type="number" class="form-control" readonly>
+<input type="text" name="sum" value="" data-type="number" class="form-control" readonly>
 </div>
 </div>
 <div class="form-group row">
@@ -199,6 +195,8 @@
 
     <hr>
   <hr>
+
+
 <ul>
 {% for donation_target in donation_targets %}
   <li>
