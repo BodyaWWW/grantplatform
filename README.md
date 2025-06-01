@@ -1,21 +1,35 @@
-The models diagram 
+Діаграма Моделей 
 ![image](https://github.com/user-attachments/assets/8fc88327-9b66-40db-9219-29e898b2ec86)
-Jira task managment 
+Jira розподіл задач по методології AGILE 
+
 ![image](https://github.com/user-attachments/assets/58caf7ea-696e-48c9-a378-a0281f9485e6)
 
-Web Platform View:
-1) Main Page view
+
+Вигляд веб платформи:
+1) Вигляд головної сторінки
+   
 ![image](https://github.com/user-attachments/assets/c6acf01d-d7dd-4f17-8411-c71bebfd43af)
-2) Sign in | Sign up view
+
+2) Авторизація / Реєстрація 
+
 ![image](https://github.com/user-attachments/assets/9bb356f7-c9d8-4327-b2cd-646462ef9eee)
-3) Foundation page view
+
+3) Сторінка зборів
+
 ![image](https://github.com/user-attachments/assets/8d816373-64ca-41e2-b8af-452668d162c7)
-4) Fondation info view 
+
+4) Інформація про збір
+
 ![image](https://github.com/user-attachments/assets/e4845807-8772-4b2b-ab41-d7b6817093b6)
-5) Foundation form 
+
+5) Форма створення зборів 
+
 ![image](https://github.com/user-attachments/assets/18092c8c-fdcb-4b88-b4c1-ac76aef212a7)
-6) Structural scheme of the site's work
+
+6) Структурна схема роботи веб-платформи
+
 ![image](https://github.com/user-attachments/assets/c9473611-2627-4fa4-b382-f51654c2c7fd)
+
 
 # 📦 FUNDUNITY
 
